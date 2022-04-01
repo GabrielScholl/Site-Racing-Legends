@@ -1,0 +1,1105 @@
+/* Global vertical adjustment */
+@font-face{
+    font-family: staatliches;
+    src: url('../Fonts/staatliches-regular.ttf') format('truetype');
+    /* font-family: league;
+    src: url('../Fonts/LeagueScript-Regular.ttf');
+    font-family: satisfy;
+    src: url('../Fonts/Satisfy-Regular.ttf'); */
+}
+/* ====================== MOBILE ==================== */
+
+@media only screen and (max-width:767px){
+
+body{
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    /* Margins (fit body to page) */
+    margin: 0;
+
+    /* Background */
+    background: linear-gradient(rgba(0,0,0,0.33), rgba(0,0,0,0.33)), url('../imgs/sennaBadman1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body.auction{
+    background-position: 25% 0%;
+}
+
+.sq1, .sq2, .sq3{
+    display: block;
+    height: 7px;
+    width: 45px;
+
+    background-color: rgba(255, 255, 255, 0.5);
+
+    margin: 8px;
+    /* Display on MenuOp (down) */
+}
+
+.menuOp{
+    /* So it shows */
+    display: block;
+    /* Position */
+    margin: 0 0 0 10px;
+}
+
+.menuMobile #myLinks{
+    /* Starting state that will be changed to display block by js */
+    display: none;
+}
+
+.menuMobile a{
+    /* Menu done */
+    position: relative;
+    display: block;
+    /* Menu Items */
+    font-family: staatliches;
+    font-weight: normal;
+    font-size: 130%;
+
+    /* Readability */
+    letter-spacing: 1px;
+    word-spacing: 1px;
+
+    /* Decoration */
+    color: white;
+    text-decoration: none;
+    text-align: center;
+
+    /* Format */
+    padding: 15px 17px;
+    margin: 2px 0;
+    min-width: 140px;
+
+    /* Background */
+    background-color: rgba(0, 0, 0, 0.66);
+}
+
+.menuMobile a:hover{
+    /* color:rgb(255, 78, 116); */
+    color: rgb(255, 226, 98);
+
+}
+
+/* nothing adjusts center LA by taking up space on the right */
+.nothing{
+    width: 61px;
+    margin: 0 10px 0 0;
+}
+
+.navBar{
+    /* Orientation */
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+
+    /* Centralization */
+    padding: 0;
+    
+    /* Dark Background */
+    background-color: rgba(0, 0, 0, 0.33);
+
+    /* Form */
+    max-height: 75px;
+}
+    
+    .navBar a{
+        /* Erase */
+        display: none;
+    }
+
+    .navBar .menuOp{
+        /* Show */
+        display: block;
+    }
+
+    .navBar .pic{
+        /* Show */
+        display: inline;
+        /* Unpad picture */
+        padding: 0;
+        /* Further is controlled in HEADER section */
+    }
+
+    .header{
+        /* Orientation */
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items: center;
+
+        /* Margins */
+        margin: 0 0 0 0;
+    }
+
+        .header img{
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+
+            /* Margins */
+            margin: -10px 0;
+
+            /* Padding */
+            padding: 0px 30px;
+        }
+
+        .header h1{
+            margin:5;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+/* ------------------ MAIN -------------------- */
+/* Main horizontal adjustment */
+.mainWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+    .main{
+        /* Margins */
+        margin: 0;
+
+        /* Font */
+        font-family: Roboto;
+        color: white;
+
+        /* Padding */
+    }
+
+    .containerOfHeaderAndMain h1{
+        font-weight: bold;
+        font-family: staatliches;
+        font-size: 36px;
+        letter-spacing: 1px;
+        color:rgba(255, 255, 255, 0.85);
+
+        /* Margin adjust for bg */
+        margin: 30px auto;
+        max-width: 600px;
+        text-align: center;
+    }
+
+    .main .iframeContainer{
+        padding: 25px 10%;
+        background-color: rgba(0, 0, 0, 0.75);
+        margin: 0;
+    }
+
+    .main .iframeRatio{
+        position: relative;
+        overflow: hidden;
+        padding-top: 50%;
+        padding-top: 56.25%;
+        margin: 20px 0 0 0;
+    }
+
+    .main iframe{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    .main .text2{
+        padding: 20px 5%;
+        background-color: rgba(255, 255, 255, 0.95);
+
+        transition: 0.15s;
+    }
+
+    .main h2{
+        font-weight: normal;
+        font-family: Playfair Display;
+        font-size: 36px;
+        text-align: left;
+
+        /* Margins */
+        margin: 5%;
+
+        color: black;
+    }
+
+    .main p{
+        font-family: Playfair Display;
+        font-size: 18px;
+        text-align: justify;
+
+        margin: 5%;
+
+        color: black;
+    }
+
+    .main .goToAbout{
+        padding: 30px 5% 50px;
+        background-color: rgba(67, 75, 65, 0);
+        color: white;
+
+        text-align: center;
+
+        transition: 0.15s;
+    }
+
+    .main .goToAbout h2{
+        margin: 0 0 40px 0;
+        text-align: center;
+        color: white;
+    }
+
+    .main .goToAbout a{
+        font-family: staatliches;
+        font-weight: normal;
+        color: black;
+        letter-spacing: 1px;
+        padding: 10px 20px 10px 20px;
+        border: none;
+        border-radius: 25px;
+        background-color: rgb(182, 255, 86);
+
+        transition: 0.15s;
+    }
+
+    .main .goToAbout:hover{
+        background-color: rgba(255, 255, 255, 1);
+    }
+
+    .main .goToAbout:hover .text2{
+        background-color: rgba(255, 255, 255, 0.66);
+    }
+
+    .main .goToAbout:hover h2{
+        color:black;
+    }
+
+    .main .goToAbout:hover a{
+        background-color: rgb(255, 86, 108);
+        color: white;
+    }
+
+    .main .goToAbout a:hover{
+        background-color: rgb(255, 226, 98);
+        color: black;
+    }
+
+    .main a{
+        text-decoration: none;
+    }
+
+    /* ------------ AUCTION ----------- */
+
+    .pills{
+        display: flex;
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+        .pills .red{
+            width: 100%;
+            background-color: rgba(141, 62, 79, 1);
+            padding: 15px 0px 30px;
+
+            transition: 0.15s;
+        }
+
+        .pills .red:hover{
+            background-color: rgba(214, 28, 68, 1);
+        }
+        .pills .red:hover a{
+            background-color: rgb(255, 0, 55);
+            border: 2px solid white;
+            font-size: 24px;
+        }
+
+            .pills .red h2{
+                color: white;
+                font-size: 32px;
+                margin: 0 0 30px 0;
+                text-align: center;
+                padding: 0 5%;
+            }
+
+            .pills .red a{
+                font-family: staatliches;
+                font-weight: normal;
+                color: white;
+                letter-spacing: 1px;
+                padding: 10px 20px 10px 20px;
+                border: none;
+                border-radius: 30px;
+                background-color: rgb(230, 20, 65);
+
+                transition: 0.15s;
+
+                margin: 0 0 20px 0;
+            }
+
+        .pills .blue{
+            width: 100%;
+            background-color: rgb(66, 58, 139);
+            padding: 15px 0px 30px;
+
+            transition: 0.15s;
+        }
+
+        .pills .blue:hover{
+            background-color: rgb(60, 43, 216);
+        }
+        .pills .blue:hover a{
+            background-color: rgb(25, 0, 255);
+            border: 2px solid white;
+            font-size: 24px;
+        }
+
+            .pills .blue h2{
+                color: white;
+                font-size: 32px;
+                margin: 0 0 30px 0;
+                text-align: center;
+                padding: 0 5%;
+            }
+
+            .pills .blue a{
+                font-family: staatliches;
+                font-weight: normal;
+                color: white;
+                letter-spacing: 1px;
+                padding: 10px 20px 10px 20px;
+                border: none;
+                border-radius: 30px;
+                background-color: rgb(48, 30, 218);
+
+                transition: 0.15s;
+
+                margin: 0 0 20px 0;
+            }
+
+            .main .horAds{
+                padding: 25px 0 30px;
+                background-color: rgba(255, 255, 255, 0.66);
+            }
+
+            .main .horAds h3{
+                color: rgba(0, 0, 0, 0.75);
+                text-align: center;
+                font-size: 14px;
+                font-weight: lighter;
+                font-family: Roboto;
+                margin: 0 0 0 0;
+            }
+
+            .main .horAds .ad{
+                width: 320px;
+                height: 50px;
+                background-color: white;
+                margin: auto;
+            }
+
+            .iframeContainer h2{
+                color: white;
+                font-size: 32px;
+                
+                margin: -10px 0 20px;
+            }
+
+            .iframeContainer p{
+                color: rgba(255, 255, 255, 0.9);
+                margin: 0px 0 40px;
+            }
+
+            #extraVids{
+                display: none;
+            }
+
+            .horAdsSq{
+                padding: 25px 0 30px;
+                background-color: rgba(255, 255, 255, 0.66);
+                margin: 25px -12.5% 30px;
+            }
+
+            .horAdsSq h3{
+                color: rgba(0, 0, 0, 0.75);
+                text-align: center;
+                font-size: 14px;
+                font-weight: lighter;
+                font-family: Roboto;
+                margin: 0 0 0 0;
+            }
+
+            .horAdsSq .adSq{
+                width: 320px;
+                height: 50px;
+                background-color: white;
+                margin: auto;
+            }
+            
+            a#seeMore{
+                font-family: staatliches;
+                font-weight: normal;
+                font-size: 18px;
+                color: white;
+                letter-spacing: 1px;
+                padding: 10px 20px 10px 20px;
+                border: 2px solid white;
+                border-radius: 6px;
+                background-color: rgba(0,0,0,0);
+
+                transition: 0.15s;
+            }
+
+            a#seeMore:hover{
+                background-color: white;
+                color: black;
+                border-color: white;
+            }
+
+            .centerSeeMore{
+                text-align: center;
+
+                margin: 30px 0;
+            }
+
+            p#missable{
+                display: none;
+            }
+
+            h2#missable{
+                margin: 0px 5%;
+            }
+
+            a.goToCharts{
+                font-family: staatliches;
+                font-weight: normal;
+                font-size: 20px;
+                color: black;
+                letter-spacing: 1px;
+                padding: 10px 20px 10px 20px;
+                border: 3px solid black;
+                border-radius: 6px;
+                background-color: rgba(0,0,0,0);
+
+                transition: 0.15s;
+            }
+
+            a.goToCharts:hover{
+                background-color: black;
+                color: white;
+                border-color: black;
+            }
+
+            .centerGoTo{
+                text-align: center;
+
+                margin: 35px 0 20px 0;
+            }
+
+            .bottomAds{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+
+                margin: 25px 9% 50px;
+            }
+
+            .bottomAds h3{
+                color: rgba(255, 255, 255, 0.75);
+                text-align: center;
+                font-size: 14px;
+                font-weight: lighter;
+                font-family: Roboto;
+                margin: 20px 0 0 0;
+            }
+
+            .bottomAd1, .bottomAd2{
+                display: flex;
+                flex-direction: column;
+
+                align-self: center;
+            }
+
+            .adb1, .adb2{
+                width: 300px;
+                height: 250px;
+                background-color: white;
+                margin: 0;
+            }
+
+
+/* ------------------- BOTTOM --------------- */
+
+.bottomPack{
+    /* Positioning */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.signature{
+    /* Size */
+    width: 95%;
+    height: auto;
+    max-width: 400px;
+    /* Position */
+    align-self: center;
+    /* Glue it to the footer */
+    margin: 100px 0 -40px 0;
+}
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /* Centers text */
+    text-align: center;
+
+    /* Background */
+    background-color: rgba(0, 0, 0, 0.5);
+
+    /* Adjusts borders */
+    padding: 16px 0;
+}
+
+    .footer p{
+        color:rgba(255, 255, 255, 0.6);
+        padding: 0 20px;
+        margin: 8px 0;
+    }
+
+    .footer a{
+        color:rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+    }
+
+    .footer .terms{
+        padding: 0 20px;
+        margin: 8px 0;
+    }
+
+    .footer a:hover{
+        color: rgb(255, 226, 98);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===================== DESKTOP ==================== */
+
+@media only screen and (min-width: 768px) {
+    /* Desktop */
+
+    body{
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+
+        /* Margins (fit body to page) */
+        margin: 0;
+
+        /* Background */
+        background: linear-gradient(rgba(0,0,0,0.33), rgba(0,0,0,0.33)), url('../imgs/sennaBadman1.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    body.auction{
+        background-position: 25% 0%;
+    }
+
+        .menuOp, .nothing, .menuMobile{
+            display: none;
+        }
+
+        .navBar{
+            /* Orientation */
+            display:flex;
+            flex-direction:row;
+            justify-content:center;
+            align-items:center;
+
+            /* Centralization */
+            padding: 0 20%;
+            
+            /* Dark Background */
+            background-color: rgba(0, 0, 0, 0.33);
+
+        }
+            
+            .navBar a{
+                /* Menu Items */
+                font-family: staatliches;
+                font-weight: normal;
+                font-size: 120%;
+
+                /* Readability */
+                letter-spacing: 1px;
+                word-spacing: 1px;
+
+                /* Decoration */
+                color: white;
+                text-decoration: none;
+                text-align: center;
+
+                /* Format */
+                padding: 29px 29px;
+                min-width: 140px;
+
+                transition: 0.1s;
+            }
+
+            .navBar .start, .navBar .about{
+                min-width: 50px;
+            }
+
+            .navBar .pic{
+                /* Unpad picture */
+                padding: 0;
+            }
+            
+            .navBar a:hover{
+                /* color:rgb(255, 78, 116); */
+                color: rgb(255, 226, 98);
+            }
+
+            .header img{
+                /* Margins */
+                margin:-31px 0 -29px 0;
+            }
+
+        /* Main horizontal adjustment */
+        .mainWrapper{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+
+        }
+            .mainAndAds{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+
+                .adSpace{
+                    width: 300px;
+                    min-width: 160px;
+                    justify-content: center;
+                }
+
+                .divider{
+                    width: 1px;
+                    background-color: rgba(255, 255, 255, 0.25);
+                    margin: 100px 50px 0 50px;
+                }
+
+                .containerOfHeaderAndMain h1{
+                    font-weight: bold;
+                    font-family: staatliches;
+                    font-size: 64px;
+                    letter-spacing: 1px;
+                    color:rgba(255, 255, 255, 0.85);
+
+                    /* Margin adjust for bg */
+                    margin: 50px auto;
+                    max-width: 600px;
+                    text-align: center;
+                }
+                
+                .main .iframeContainer{
+                    padding: 50px 15%;
+                    background-color: rgba(0, 0, 0, 0.75);
+                }
+
+                .main .iframeRatio{
+                    position: relative;
+                    overflow: hidden;
+                    padding-top: 50%; /* wide */  
+                    padding-top: 56.25%; /* 16:9 */
+
+                    margin: 20px 0 0 0;
+                }
+
+                .main iframe{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    border: 0;
+                }
+
+                .main .text2{
+                    padding: 50px 15%;
+                    background-color: rgba(255, 255, 255, 0.95);
+
+                    transition: 0.15s;
+                }
+
+                .main h2{
+                    font-weight: normal;
+                    font-family: Playfair Display;
+                    font-size: 48px;
+
+                    margin: 0;
+                }
+
+                .main p{
+                    font-family: Playfair Display;
+                    font-size: 18px;
+                    text-align: justify;
+
+                    max-width: 1000px;
+                }
+
+                .main .goToAbout{
+                    padding: 50px 15%;
+                    background-color: rgba(67, 75, 65, 0);
+                    color: white;
+
+                    text-align: center;
+
+                    transition: 0.15s;
+                }
+
+                .main .goToAbout h2{
+                    margin: 0 0 40px 0;
+                }
+
+                .main .goToAbout a{
+                    font-family: staatliches;
+                    font-weight: normal;
+                    color: black;
+                    letter-spacing: 1px;
+                    padding: 10px 20px 10px 20px;
+                    border: none;
+                    border-radius: 25px;
+                    background-color: rgb(182, 255, 86);
+
+                    transition: 0.15s;
+                }
+
+                .main .goToAbout:hover{
+                    background-color: rgba(255, 255, 255, 1);
+                }
+
+                .main .goToAbout:hover .text2{
+                    background-color: rgba(255, 255, 255, 0.66);
+                }
+
+                .main .goToAbout:hover h2{
+                    color:black;
+                }
+
+                .main .goToAbout:hover a{
+                    background-color: rgb(255, 86, 108);
+                    color: white;
+                }
+
+                .main .goToAbout a:hover{
+                    background-color: rgb(255, 226, 98);
+                    color: black;
+                }
+
+                .main a{
+                    text-decoration: none;
+                }
+
+                .main .horAds{
+                    padding: 45px 0 50px;
+                    background-color: rgba(255, 255, 255, 0.66);
+                }
+
+                .main .horAds h3{
+                    color: rgba(0, 0, 0, 0.5);
+                    text-align: center;
+                    font-size: 14px;
+                    font-weight: lighter;
+                    font-family: Roboto;
+                    margin: 0 0 0 0;
+                }
+
+                .main .horAds .ad{
+                    width: 728px;
+                    height: 90px;
+                    background-color: white;
+                    margin: auto;
+                }
+
+                /* ------------ AUCTION ----------- */
+
+                .pills{
+                    display: flex;
+                    flex-direction: row;
+
+                    text-align: center;
+                }
+
+                    .pills .red{
+                        width: 50%;
+                        background-color: rgba(141, 62, 79, 1);
+                        padding: 50px 10px;
+
+                        transition: 0.15s;
+                    }
+
+                    .pills .red:hover{
+                        background-color: rgba(214, 28, 68, 1);
+                    }
+                    .pills .red:hover a{
+                        background-color: rgb(255, 0, 55);
+                        border: 2px solid white;
+                        font-size: 24px;
+                    }
+
+                        .pills .red h2{
+                            color: white;
+                            font-size: 36px;
+                            margin: 0 0 60px 0;
+                        }
+
+                        .pills .red a{
+                            font-family: staatliches;
+                            font-weight: normal;
+                            color: white;
+                            letter-spacing: 1px;
+                            padding: 10px 20px 10px 20px;
+                            border: none;
+                            border-radius: 30px;
+                            background-color: rgb(230, 20, 65);
+        
+                            transition: 0.15s;
+
+                            margin: 0 0 20px 0;
+                        }
+
+                    .pills .blue{
+                        width: 50%;
+                        background-color: rgb(66, 58, 139);
+                        padding: 50px 10px;
+
+                        transition: 0.15s;
+                    }
+
+                    .pills .blue:hover{
+                        background-color: rgb(60, 43, 216);
+                    }
+                    .pills .blue:hover a{
+                        background-color: rgb(25, 0, 255);
+                        border: 2px solid white;
+                        font-size: 24px;
+                    }
+
+                        .pills .blue h2{
+                            color: white;
+                            font-size: 36px;
+                            margin: 0 0 60px 0;
+                        }
+
+                        .pills .blue a{
+                            font-family: staatliches;
+                            font-weight: normal;
+                            color: white;
+                            letter-spacing: 1px;
+                            padding: 10px 20px 10px 20px;
+                            border: none;
+                            border-radius: 30px;
+                            background-color: rgb(48, 30, 218);
+        
+                            transition: 0.15s;
+
+                            margin: 0 0 20px 0;
+                        }
+
+                .iframeContainer h2{
+                    color: white;
+
+                    margin: 0 0 30px;
+                }
+
+                .iframeContainer p{
+                    color: rgba(255, 255, 255, 0.9);
+                }
+
+                #extraVids{
+                    display: none;
+                }
+
+                .horAdsSq{
+                    padding: 45px 0 50px;
+                    background-color: rgba(255, 255, 255, 0.66);
+                    
+                    margin: 45px -21.42857142% 50px;
+                }
+
+                .horAdsSq h3{
+                    color: rgba(0, 0, 0, 0.5);
+                    text-align: center;
+                    font-size: 14px;
+                    font-weight: lighter;
+                    font-family: Roboto;
+                    margin: 0 0 0 0;
+                }
+
+                .horAdsSq .adSq{
+                    width: 728px;
+                    height: 90px;
+                    background-color: white;
+                    margin: auto;
+                }
+
+                a#seeMore{
+                    font-family: staatliches;
+                    font-weight: normal;
+                    font-size: 18px;
+                    color: white;
+                    letter-spacing: 1px;
+                    padding: 10px 20px 10px 20px;
+                    border: 2px solid white;
+                    border-radius: 6px;
+                    background-color: rgba(0,0,0,0);
+
+                    transition: 0.15s;
+                }
+
+                a#seeMore:hover{
+                    background-color: white;
+                    color: black;
+                    border-color: white;
+                }
+
+                .centerSeeMore{
+                    text-align: center;
+
+                    margin: 50px 0 0 0;
+                }
+
+                a.goToCharts{
+                    font-family: staatliches;
+                    font-weight: normal;
+                    font-size: 20px;
+                    color: black;
+                    letter-spacing: 1px;
+                    padding: 10px 20px 10px 20px;
+                    border: 3px solid black;
+                    border-radius: 6px;
+                    background-color: rgba(0,0,0,0);
+
+                    transition: 0.15s;
+                }
+
+                a.goToCharts:hover{
+                    background-color: black;
+                    color: white;
+                    border-color: black;
+                }
+
+                .centerGoTo{
+                    text-align: center;
+
+                    margin: 50px 0 0 0;
+                }
+
+                .bottomAds{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-evenly;
+
+                    margin: 45px 9% 50px;
+                }
+
+                .bottomAds h3{
+                    color: rgba(255, 255, 255, 0.5);
+                    text-align: center;
+                    font-size: 14px;
+                    font-weight: lighter;
+                    font-family: Roboto;
+                    margin: 0 0 0 0;
+                }
+
+                .bottomAd1, .bottomAd2{
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .adb1, .adb2{
+                    width: 300px;
+                    height: 250px;
+                    background-color: white;
+                    margin: 0;
+                }
+
+        .bottomPack{
+            /* Positioning */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .signature{
+            /* Position */
+            align-self: center;
+            /* Glue it to the footer */
+            margin: 100px 0 -40px 0;
+            max-width: 400px;
+        }
+        
+        .footer{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            /* Background */
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+            .footer p{
+                color:rgba(255, 255, 255, 1);
+
+                padding: 0 20px;
+            }
+
+            .footer a{
+                color:rgba(255, 255, 255, 1);
+                text-decoration: none;
+            }
+
+            .footer .terms{
+                padding: 0 20px;
+                margin: 16px 0;
+            }
+
+            .footer a:hover{
+                color: rgb(255, 226, 98);
+            }
+}
+
