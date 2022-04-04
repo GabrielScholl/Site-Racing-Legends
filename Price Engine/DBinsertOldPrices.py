@@ -20,7 +20,7 @@ def infoRetriever(file):
                 allValues.append(infoList)
                 infoList = []
                 c = -1
-    DBinserter.insert(allValues)
+    DBinserter.insert(allValues, midCode=False)
 
 
 mypath = r'C:\Users\Nome\Documents\Forza Prices Getter from ASUS and PC\prices'

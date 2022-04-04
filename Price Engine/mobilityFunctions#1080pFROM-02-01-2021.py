@@ -4,20 +4,47 @@ from pynput.keyboard import Key, Controller
 keyboard = Controller()
 from pynput.mouse import Button, Controller
 mouse = Controller()
-from datetime import date
+from datetime import date, timedelta
 
 import numpy as np
 import cv2
 import re
 import pytesseract
 
-screenResolution = "1080p"
+screenResolution = "4K"
 if screenResolution == "1080p":
     pytesseract.pytesseract.tesseract_cmd = r'D:\Program Files\Tesseract-OCR\tesseract.exe'
 else: # 4K
     pytesseract.pytesseract.tesseract_cmd = r'G:\Program Files\Tesseract-OCR\tesseract.exe'
 
 import random as rnd
+import DBinserter
+
+import os
+from os import listdir
+from os.path import isfile, join
+
+lastRowLenght = 5 # if new make, change here
+
+lang = 'pt'
+
+# checks the files to see the date
+def todayTaken():
+    mypath = r'G:\Forza Prices Getter from ASUS and PC in 13-02-2021\Collected prices'
+    onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
+    for file in onlyfiles:
+        fileDate = file[8:-4]
+        actual = date.today().strftime('%Y-%m-%d')
+        if actual == fileDate:
+            return True
+    return False
+
+# defining what day it is
+if todayTaken():
+    today = date.today() + timedelta(days=1)
+else:
+    today = date.today()
 
 # image stacker not mine
 def stackImages(scale,imgArray):
@@ -125,7 +152,7 @@ def averager(text):
     cutPrices = []
     for el in prices:
         if el != '':
-            cutPrices.append(int(el))    
+            cutPrices.append(int(el))
     print(cutPrices)
 
     # separation
@@ -263,7 +290,7 @@ def getAllinfo():
     allinfo = []
     for row in range(1,26,1):
         if row == 25:
-            length = 2
+            length = lastRowLenght # if new make, change here
         for col in range(1,length,1):
             print(row, col)
             # HOVERING CAR MAKE IN 2D MENU
@@ -304,7 +331,7 @@ def getAllinfo():
                 # ENTERS LISTINGS
                 avgStart, avgBuyout = grabPrices()
                 # REENTERING SEARCH
-                today = date.today()
+                # today was here x_x
                 # info flow (allinfo is [[make, model, avgStart, avgBuyout, date],...])
                 infoList = [make, model, avgStart, avgBuyout, today]
                 # writes it in the file
@@ -315,7 +342,11 @@ def getAllinfo():
                         f.write("\n")
                         f.close()
                 else: # 4K
-                    with open('G:\Forza Prices Getter\\valores-'+str(today)+'.txt', 'a') as f:
+                    # send to website
+                    DBinserter.insert(infoList, midCode=True)
+
+                    # record on PC
+                    with open(r'G:\Forza Prices Getter from ASUS and PC in 13-02-2021\Collected prices\\valores-'+str(today)+'.txt', 'a') as f:
                         for item in infoList:
                             f.write("%s\n" % item)
                         f.write("\n")
@@ -380,7 +411,7 @@ def modelSelector():
     # IN SEARCH
     # read make and model
     make, model = readMakeNmodel()
-    if model == 'ANY' or model == 'ANN':
+    if model == 'ANY' or model == 'ANN' or model == 'QUALQUER':
         isAny = True
     # IN SEARCH HOVERS CONFIRM
     # down x4
@@ -396,11 +427,17 @@ def readPrices():
         checkUntilPixel((507,171),(255,255,255)) # 1080p
     noCars = False
     hasCars = False
+    serversBad = False
+    tini = time.time()
     # LISTINGS LOADING
     while True:
         # looks at tip of the Y in "no auctions to display"
         if screenResolution == "4K":
-            noCars = checkIfPixel((3114,1092), (255,255,255)) # 4K
+            if lang == 'pt':
+                # olha ponta do R
+                noCars = checkIfPixel((3158,1095), (255,255,255)) # 4K
+            else:
+                noCars = checkIfPixel((3114,1092), (255,255,255)) # 4K
         elif screenResolution == "1080p":
             noCars = checkIfPixel((1557,546), (255,255,255)) # 1080p
         if noCars:
@@ -408,16 +445,33 @@ def readPrices():
             break
         # looks at green tile "auction details"
         if screenResolution == "4K":
-            hasCars = checkIfPixel((3590,520), (0,181,146)) # 4K
+            if lang == 'pt':
+                # checa branco do O
+                hasCars = checkIfPixel((2996,553), (255,255,255)) # 4K
+            else:
+                hasCars = checkIfPixel((3590,520), (0,181,146)) # 4K
         elif screenResolution == "1080p":
             hasCars = checkIfPixel((1795,260), (0,181,146)) # 1080p
         if hasCars:
             # AUCTION DETAILS GREEN appeared
             break
+        # looks at first X when servers are bad
+        serversBad = checkIfPixel((1078,766), (170,170,170)) # 4K
+        if serversBad:
+            # SERVER IS NOT AVAILABLE appeared
+            time.sleep(60*2 + rnd.random()*60)
+            break
+        # checks time to see if it's not stuck loading
+        tnow = time.time()
+        if tnow-tini > 20:
+            # STUCK LOADING
+            break
         time.sleep(0.1)
+
     # LOADING CARS IN LISTINGS
     # checks if car class obj appeared
     white = True
+    t1 = time.time()
     if screenResolution == "4K":
         white = checkIfPixel((1874,607),(255,255,255)) # 4K
     elif screenResolution == "1080p":
@@ -428,6 +482,12 @@ def readPrices():
             white = checkIfPixel((1874,607),(255,255,255)) # 4K
         elif screenResolution == "1080p":
             white = checkIfPixel((937,303),(255,255,255)) # 1080p
+        # checks if it forgot to show found listings
+        t2 = time.time()
+        if t2-t1 > 20:
+            avgStart = 'No listing found'
+            avgBuyout = 'No listing found'
+            return avgStart, avgBuyout
 
     time.sleep(0.3) # 0.3 according to the recording
     # ALL APPEARED IN LISTINGS
@@ -471,14 +531,15 @@ def grabPrices():
     # RETURNS FROM LISTINGS TO AUCTION TAB
     # exit
     keytap('esc', long=False)
-    time.sleep(0.9) # 0.8 min to work, 0.4 from recording... fuck this, checkUntil...
-    if screenResolution == "4K":
-        checkUntilPixel((599, 382), (255, 255, 255)) # 4K
-    elif screenResolution == "1080p":
+    # time.sleep(0.9) # 0.8 min to work, 0.4 from recording... fuck this, checkUntil...
+    if screenResolution == "1080p":
         checkUntilPixel((300, 565), (255, 255, 255)) # 1080p
+    else:
+        checkUntilPixel((599, 382), (255, 255, 255)) # 4K
     # IN AUCTION TAB
+    time.sleep(0.1)
     # enter
-    keytap('enter', long=False)
+    keytap('enter', long=True)
     # ENTERING SEARCH
     return avgStart, avgBuyout
 
@@ -543,22 +604,56 @@ def gameReopener(starting=False):
             # mouse.position = (1889,527) # 1080p
             # GAME OPENING
             # wait for press enter
-            checkUntilPixel((3507,1987),(255,255,255)) # 4K
+            checkUntilPixel((3398,1369),(255,255,255)) # 4K
             # checkUntilPixel((1701,714),(255,255,255)) # 1080p
+            time.sleep(0.3)
             keytap('enter', long=True)
             # waits to press enter again
             checkUntilPixel((2952,1842),(255,255,255)) # 4K
             # checkUntilPixel((1790,872),(255,255,255)) # 1080p
+
+
+            # ------------ Starts selecting right resolution
+            time.sleep(0.1)
+            keytap('down', long=False)
+            time.sleep(0.1)
+            keytap('enter', long=False)
+            checkUntilPixel((2400,765),(255,255,255)) # 4K
+            keytap('down', long=False)
+            time.sleep(0.1)
+            keytap('enter', long=False)
+            checkUntilPixel((1152,276),(255,255,255)) # 4K
+            keytap('down', long=False)
+            time.sleep(0.1)
+            keytap('enter', long=False)
+            for i in range(30): keytap('down', long=False)
+            for i in range(5): keytap('up', long=False)
+            time.sleep(0.1)
+            keytap('enter', long=False)
+            time.sleep(2)
+            if checkIfPixel((1392,964),(0,183,147)):
+                keytap('enter', long=False)
+            for i in range(3): 
+                keytap('esc', long=True)
+                time.sleep(0.1)
+            keytap('up', long=True)
+            time.sleep(0.1)
             keytap('enter', long=True)
+            time.sleep(0.1)
+            # ------------ Is done selecting right resolution
+            
+
             # esc x2
-            checkUntilPixel((3700,1140),(255,255,255)) # 4K
+            checkUntilPixel((3672,1141),(255,255,255)) # 4K
             # checkUntilPixel((1848,572),(255,255,255)) # 1080p
+            time.sleep(0.3)
             keytap('esc', long=True)
-            checkUntilPixel((1504,256),(255,255,255)) # 4K
+            checkUntilPixel((1764,250),(255,255,255)) # 4K
             # checkUntilPixel((741,135),(255,255,255)) # 1080p
+            time.sleep(0.3)
             keytap('esc', long=True)
             # pg down x2
-            checkUntilPixel((2326,288),(255,255,255)) # 4K
+            checkUntilPixel((2368,294),(255,255,255)) # 4K
             # checkUntilPixel((1160,150),(255,255,255)) # 1080p
             for i in range(2): keytap('page_down', long=False) # 4K
             # for i in range(2): keytap('page_down', long=True) # 1080p
@@ -599,3 +694,7 @@ print(allinfo)
 
 end = time.time()
 print('Time taken to take prices pic: '+str((end - start)/3600))
+
+time.sleep(10)
+# os.system("shutdown /s")
+os.system("TASKKILL /F /IM ForzaHorizon4.exe")
