@@ -10,8 +10,18 @@ from datetime import date
 import wordMatcher
 
 # def insert(infoList):
-def insert(allValues):
+def insert(allValues, midCode = True):
     # infoList = [make, model, avgStart, avgBuyout, today]
+
+    if midCode:
+        infoList = allValues
+        wholeProcess(infoList)
+
+    else: # inserting old prices
+        for infoList in allValues:
+            wholeProcess(infoList)
+
+def wholeProcess(infoList):
     db = mysql.connector.connect(
         host="sql435.main-hosting.eu",
         user="u368804575_poripipperson",
@@ -21,53 +31,50 @@ def insert(allValues):
 
     cur = db.cursor()
 
-    for infoList in allValues:
-        make, model = infoList[0], infoList[1]
-        print("Errado: "+make+" - "+model)
-        # fuzzy funnels the above "guess" to the correct car
-        make, model = wordMatcher.match(make, model)
-        print("Certo: "+make+" - "+model)
-        # for SEARCHING in the DB, use makeSQL, for INSERTING, use just make
-        # makeSQL deals with apostrophe, adding 2 where there's one and wrapping text in them
-        makeSQL = make
-        modelSQL = model
-        for c in make:
-            if c == "'":
-                parts = makeSQL.split("'")
-                makeSQL = parts[0]+"\'\'"+parts[1]
-                break
-        for c in model:
-            if c == "'":
-                parts = modelSQL.split("'")
-                modelSQL = parts[0]+"\'\'"+parts[1]
-                break
+    make, model = infoList[0], infoList[1]
+    print("Errado: "+make+" - "+model)
+    # fuzzy funnels the above "guess" to the correct car
+    make, model = wordMatcher.match(make, model)
+    print("Certo: "+make+" - "+model)
+    # for SEARCHING in the DB, use makeSQL, for INSERTING, use just make
+    # makeSQL deals with apostrophe, adding 2 where there's one and wrapping text in them
+    makeSQL = make
+    modelSQL = model
+    for c in make:
+        if c == "'":
+            parts = makeSQL.split("'")
+            makeSQL = parts[0]+"\'\'"+parts[1]
+            break
+    for c in model:
+        if c == "'":
+            parts = modelSQL.split("'")
+            modelSQL = parts[0]+"\'\'"+parts[1]
+            break
 
-        makeSQL = "'"+makeSQL+"'"
-        modelSQL = "'"+modelSQL+"'"
+    makeSQL = "'"+makeSQL+"'"
+    modelSQL = "'"+modelSQL+"'"
 
-        print("SQL: "+makeSQL+" - "+modelSQL)
+    print("SQL: "+makeSQL+" - "+modelSQL)
 
-        # connect was here x_x
+    # connect was here x_x
 
-        # is there such car?
-        sqlCommand = "SELECT ID FROM cars WHERE make = %s AND model = %s"
-        cur.execute(sqlCommand, (str(make), str(model)))
-        carID = cur.fetchall()
-        print(carID)
-        # Yes -> put price there
-        if carID != []:
-            # print('There is such car')
-            insertPrice(infoList, cur, make, model)
-        # No -> insert new car and then put price there
-        else:
-            # print('NO SUCH CAR')
-            insertNewCar(make, model, cur)
-            # print('I created an entry for that car')
-            insertPrice(infoList, cur, make, model)
+    # is there such car?
+    sqlCommand = "SELECT ID FROM cars WHERE make = %s AND model = %s"
+    cur.execute(sqlCommand, (str(make), str(model)))
+    carID = cur.fetchall()
+    print(carID)
+    # Yes -> put price there
+    if carID != []:
+        # print('There is such car')
+        insertPrice(infoList, cur, make, model)
+    # No -> insert new car and then put price there
+    else:
+        # print('NO SUCH CAR')
+        insertNewCar(make, model, cur)
+        # print('I created an entry for that car')
+        insertPrice(infoList, cur, make, model)
 
-        db.commit()
-    # print('comitei')
-    # db.close()
+    db.commit()
 
 def insertNewCar(make, model, cur):
     sqlCommand = """INSERT INTO cars(make, model) VALUES(%s,%s);"""
